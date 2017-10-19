@@ -14,9 +14,9 @@ public class QuizController {
 
     @RequestMapping(value = "/quiz", method = RequestMethod.GET)
     public String renderQuizView(
-            @RequestParam(value="name", required=false, defaultValue="World") String name,
+            @RequestParam(value="question_template", required=false, defaultValue="question_1") String question_template,
             Model model) {
-        model.addAttribute("name", name);
+        model.addAttribute("question_template", question_template);
         return "QuizPage";
     }
 

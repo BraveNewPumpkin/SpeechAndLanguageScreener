@@ -8,9 +8,7 @@
 <body>
 <div>
     <h1 align="center">Welcome to the Quiz Page</h1>
-    <p th:text="'Hello, ' + ${name} + '!'"></p>
-    <div th:insert="~{question_1.html}"></div>
-    <div th:insert="~{question_1}"></div>
+    <div th:insert="${question_template}"></div>
 </div>
 </body>
 </html>
