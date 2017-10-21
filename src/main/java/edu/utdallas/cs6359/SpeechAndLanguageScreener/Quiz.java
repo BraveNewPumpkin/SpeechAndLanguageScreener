@@ -1,9 +1,9 @@
 package edu.utdallas.cs6359.SpeechAndLanguageScreener;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 
-public class Quiz extends LinkedList<Section> {
-    public Quiz(LinkedList<Section> sections){
+public class Quiz extends ArrayList<Section> {
+    public Quiz(ArrayList<Section> sections){
         super(sections);
     }
 }
