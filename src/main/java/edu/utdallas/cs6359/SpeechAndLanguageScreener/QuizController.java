@@ -56,6 +56,9 @@ public class QuizController {
             } else if (sections_iter.hasNext()) {
                 current_section = sections_iter.next();
                 questions_iter = current_section.iterator();
+            } else {
+                //we're out of options and haven't found next question
+                break;
             }
         }
         return next_question;
