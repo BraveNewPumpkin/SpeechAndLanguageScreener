@@ -12,15 +12,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class QuizController {
     @RequestMapping(value = "/quiz", method = RequestMethod.GET)
-    public String renderQuizView(
-            @RequestParam(value="section_template", required=false, defaultValue="Section_1") String section_template,
-            @RequestParam(value="question_template", required=false, defaultValue="Section_1/Question_1") String question_template,
-            Model model) {
+    public String renderQuizView(Model model) {
+        String section_template_path = "quiz_sections/section_1";
+        String question_template_path = "quiz_sections/section_1/question_1";
         String user_name = "Stu Dent"; //TODO implement current user name
         model.addAttribute("user_name", user_name);
-        model.addAttribute("section_template", section_template);
-        model.addAttribute("question_template", question_template);
-        return "QuizPage";
+        model.addAttribute("section_template_path", section_template_path);
+        model.addAttribute("question_template_path", question_template_path);
+        return "quiz_page";
     }
 
 
