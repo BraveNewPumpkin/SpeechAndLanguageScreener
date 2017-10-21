@@ -34,16 +34,21 @@ public class QuizController {
     @PostConstruct
     private void initialize(){
         sections_iter = quiz.iterator();
-        if (sections_iter.hasNext()) {
-            current_section = sections_iter.next();
-            questions_iter = current_section.iterator();
-            current_question = getNextQuestion();
+        try{
+            setCurrentQuizPosition(0, 0);
             if(current_question == null){
                 //TODO error page: "test had no questions"
             }
-        } else {
-            //TODO error page: "test had no sections"
+        } catch (IndexOutOfBoundsException e){
+            //TODO error page: "test is missing sections or questions"
         }
+    }
+
+    private void setCurrentQuizPosition(int section_id, int question_id) throws IndexOutOfBoundsException {
+        sections_iter = quiz.listIterator(section_id);
+        current_section = sections_iter.next();
+        questions_iter = current_section.listIterator(question_id);
+        current_question = questions_iter.next();
     }
 
     private Question getNextQuestion() {
@@ -97,7 +102,7 @@ public class QuizController {
         model.addAttribute("section_template_path", quiz.get(section_id).get_quiz_template_path());
         model.addAttribute("question_template_path", current_section.get(question_id).get_template_path());
 
-        return new ModelAndView("quiz_page", model);
+        return new ModelAndView("/quiz_page", model);
     }
 
     @RequestMapping(value = "/quiz/section_{section_id:[\\d]+}/question_{question_id:[\\d]+}", method = RequestMethod.POST)
@@ -105,6 +110,14 @@ public class QuizController {
             @PathVariable int section_id,
             @PathVariable int question_id,
             HttpServletRequest request) {
+        //POSTing a question out of order resets the order to the given question
+        if(getCurrentSectionId() != section_id || getCurrentQuestionId() != question_id){
+            try {
+                setCurrentQuizPosition(section_id, question_id);
+            } catch (IndexOutOfBoundsException e) {
+                //TODO error page 404
+            }
+        }
         //TODO record the response in current_question
         Map<String, String[]> parameters = request.getParameterMap();
         current_question.setAnswer(parameters);
@@ -112,7 +125,7 @@ public class QuizController {
         request.setAttribute(View.RESPONSE_STATUS_ATTRIBUTE, HttpStatus.FOUND);
         current_question = getNextQuestion();
         if(current_question == null){
-            return new ModelAndView("redirect:/scores");
+            return new ModelAndView("redirect:/scores_page");
         }
         return new ModelAndView(getRedirectString());
     }
