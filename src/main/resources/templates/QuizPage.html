@@ -2,13 +2,13 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Quiz Page</title>
-    <link rel="stylesheet" type="text/css" href="../css/Styles.css" th:href="@{Styles.css}" />
+    <link rel="stylesheet" type="text/css" href="../static/Styles.css" th:href="@{Styles.css}" />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 </head>
 <body>
 <div>
-    <h1 align="center">Welcome to the Quiz Page</h1>
-    <div th:replace="${question_template}"></div>
+    <h1 align="center">This section is for [[${user_name}]]</h1>
+    <div th:replace="${section_template}"></div>
 </div>
 </body>
 </html>
