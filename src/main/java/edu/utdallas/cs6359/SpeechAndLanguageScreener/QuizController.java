@@ -36,6 +36,10 @@ public class QuizController {
         if (sections_iter.hasNext()) {
             current_section = sections_iter.next();
             questions_iter = current_section.iterator();
+            current_question = getNextQuestion();
+            if(current_question == null){
+                //TODO error page: "test had no questions"
+            }
         } else {
             //TODO error page: "test had no sections"
         }
