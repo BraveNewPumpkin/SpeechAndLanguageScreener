@@ -125,7 +125,7 @@ public class QuizController {
         request.setAttribute(View.RESPONSE_STATUS_ATTRIBUTE, HttpStatus.FOUND);
         current_question = getNextQuestion();
         if(current_question == null){
-            return new ModelAndView("redirect:/scores_page");
+            return new ModelAndView("redirect:/scores");
         }
         return new ModelAndView(getRedirectString());
     }
