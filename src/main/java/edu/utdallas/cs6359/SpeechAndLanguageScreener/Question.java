@@ -1,9 +1,13 @@
 package edu.utdallas.cs6359.SpeechAndLanguageScreener;
 
-import org.springframework.context.annotation.Bean;
-
-//@Bean
 public class Question {
-    String template_name;
+    private String template_path;
 
+    public Question(String template_path){
+        this.template_path = template_path;
+    }
+
+    public String get_template_path() {
+        return template_path;
+    }
 }
