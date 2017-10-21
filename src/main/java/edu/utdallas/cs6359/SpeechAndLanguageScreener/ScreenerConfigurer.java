@@ -19,11 +19,11 @@ public class ScreenerConfigurer {
         Question question_1 = new Question("quiz_sections/section_1/question_1");
         Question question_2 = new Question("quiz_sections/section_1/question_2");
         ArrayList<Question> questions = new ArrayList<>(Arrays.asList(question_1, question_2));
-        Section section_1 = new Section("quiz_sections/section_1", "score_sections/section_1", questions);
+        Section section_1 = new Section("Receptive Language Section","quiz_sections/section", "score_sections/section_1", questions);
         question_1 = new Question("quiz_sections/section_2/question_1");
         question_2 = new Question("quiz_sections/section_2/question_2");
         questions = new ArrayList<>(Arrays.asList(question_1, question_2));
-        Section section_2 = new Section("quiz_sections/section_1", "score_sections/section_1", questions);
+        Section section_2 = new Section("Expressive Language Section","quiz_sections/section", "score_sections/section_1", questions);
         ArrayList<Section> sections = new ArrayList<>(Arrays.asList(section_2));
         return new Quiz(sections);
     }
