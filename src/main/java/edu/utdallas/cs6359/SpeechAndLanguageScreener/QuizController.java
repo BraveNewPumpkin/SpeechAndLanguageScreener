@@ -2,14 +2,18 @@ package edu.utdallas.cs6359.SpeechAndLanguageScreener;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.View;
 
 import javax.annotation.PostConstruct;
+import javax.servlet.http.HttpServletRequest;
 import java.util.Iterator;
+import java.util.regex.Pattern;
 
 /**
  * @author Kyle Bolton
@@ -52,25 +56,55 @@ public class QuizController {
         return next_question;
     }
 
-    @RequestMapping(value = "/quiz", method = RequestMethod.GET)
-    public String renderQuizView(Model model) {
-        String user_name = "Stu Dent"; //TODO implement current user name
-        current_question = getNextQuestion();
-        if(current_question == null){
-            //TODO redirect to GET /scores_page
-            return "scores_page";
-        }
-        model.addAttribute("user_name", user_name);
-        model.addAttribute("section_template_path", current_section.get_quiz_template_path());
-        model.addAttribute("question_template_path", current_question.get_template_path());
-        return "quiz_page";
+    private int getCurrentSectionId(){
+        return quiz.indexOf(current_section);
     }
 
-    @RequestMapping(value = "/quiz", method = RequestMethod.POST)
-    public String recordQuestionResponse(Model model) {
-        //TODO record the response in current_question
+    private int getCurrentQuestionId(){
+        return current_section.indexOf(current_question);
+    }
 
-        return renderQuizView(model);
+    private Section getSectionById(int id){
+        return quiz.get(id);
+    }
+
+    private String getRedirectString(){
+        return "redirect:/quiz/section_" + getCurrentSectionId() + "/question_" + getCurrentQuestionId();
+    }
+
+    @RequestMapping(value = "/quiz", method = RequestMethod.GET)
+    public ModelAndView redirectToQuizStart(ModelMap model){
+        return new ModelAndView(getRedirectString(), model);
+    }
+
+
+    @RequestMapping(value = "/quiz/section_{section_id:[\\d]+}/question_{question_id:[\\d]+}", method = RequestMethod.GET)
+    public ModelAndView renderQuizView(
+            @PathVariable int section_id,
+            @PathVariable int question_id,
+            ModelMap model) {
+        String user_name = "Stu Dent"; //TODO implement current user name. this should come from the welcome page
+        model.addAttribute("user_name", user_name);
+        model.addAttribute("section_template_path", quiz.get(section_id).get_quiz_template_path());
+        model.addAttribute("question_template_path", current_section.get(question_id).get_template_path());
+
+        return new ModelAndView("quiz_page", model);
+    }
+
+    @RequestMapping(value = "/quiz/section_{section_id:[\\d]+}/question_{question_id:[\\d]+}", method = RequestMethod.POST)
+    public ModelAndView recordQuestionResponse(
+            @PathVariable int section_id,
+            @PathVariable int question_id,
+ //           @RequestBody String postPayload,
+            HttpServletRequest request) {
+        //TODO record the response in current_question
+        //set http status code to 302 since we are redirecting to a GET
+        request.setAttribute(View.RESPONSE_STATUS_ATTRIBUTE, HttpStatus.FOUND);
+        current_question = getNextQuestion();
+        if(current_question == null){
+            return new ModelAndView("redirect:/scores");
+        }
+        return new ModelAndView(getRedirectString());
     }
 
 }

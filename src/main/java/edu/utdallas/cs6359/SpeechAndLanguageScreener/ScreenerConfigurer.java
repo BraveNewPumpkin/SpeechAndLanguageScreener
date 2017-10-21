@@ -11,10 +11,11 @@ import java.util.ArrayList;
 
 @Configuration
 public class ScreenerConfigurer {
+
     @Bean
     @Qualifier("screener")
     public Quiz quiz(){
-        //TODO load quiz_sections and questions and populate quiz_sections with questions
+        //TODO load this config data from file and populate sections and questions
         Question question_1 = new Question("quiz_sections/section_1/question_1");
         Question question_2 = new Question("quiz_sections/section_1/question_2");
         ArrayList<Question> questions = new ArrayList<>(Arrays.asList(question_1, question_2));
