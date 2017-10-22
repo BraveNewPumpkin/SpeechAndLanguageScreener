@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -14,7 +13,6 @@ import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.regex.Pattern;
 
 /**
  * @author Kyle Bolton
@@ -98,7 +96,7 @@ public class QuizController {
             ModelMap model) {
         String user_name = "Stu Dent"; //TODO implement current user name. this should come from the welcome page
         model.addAttribute("user_name", user_name);
-        model.addAttribute("section_name", current_section.get_name());
+        model.addAttribute("section_name", current_section.getName());
         model.addAttribute("section_template_path", quiz.get(section_id).get_quiz_template_path());
         model.addAttribute("question_template_path", current_section.get(question_id).get_template_path());
 
@@ -109,8 +107,7 @@ public class QuizController {
     public ModelAndView recordQuestionResponse(
             @PathVariable int section_id,
             @PathVariable int question_id,
-            HttpServletRequest request,
-            Model model) {
+            HttpServletRequest request) {
         //POSTing a question out of order resets the order to the given question
         if(getCurrentSectionId() != section_id || getCurrentQuestionId() != question_id){
             try {
@@ -121,7 +118,7 @@ public class QuizController {
         }
         //TODO figure out why parameters is always empty
         Map<String, String[]> parameters = request.getParameterMap();
-        current_question.setAnswer(parameters);
+        current_question.set_given_answers(parameters);
         //set http status code to 302 since we are redirecting to a GET
         request.setAttribute(View.RESPONSE_STATUS_ATTRIBUTE, HttpStatus.FOUND);
         current_question = getNextQuestion();

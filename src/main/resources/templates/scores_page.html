@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-	<title>Score Page</title>
-	<link rel="stylesheet" type="text/css" href="../static/styles.css" th:href="@{/styles.css}" />
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>Score Page</title>
+    <link rel="stylesheet" type="text/css" href="../static/styles.css" th:href="@{/styles.css}"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 </head>
 <body>
 <div class="login-page">
-	<div class="form">
-		<h3>Your score is : 100</h3>
-	</div>
+    <div class="form" th:each="section_template_path, iter_stat : ${section_template_paths}">
+        <div th:include="${section_template_path}" />
+    </div>
 </div>
 </body>
 </html>

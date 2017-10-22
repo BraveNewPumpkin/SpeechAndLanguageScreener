@@ -1,18 +1,21 @@
 package edu.utdallas.cs6359.SpeechAndLanguageScreener;
 
+import org.springframework.context.annotation.Bean;
+
 import java.util.Map;
 import java.util.Set;
 
 public class SingleAnswerQuestion extends Question{
-    private final int points_possible = 1;
+    protected final int points_possible = 1;
+    Set<String> given_answers;
     private Set<String> correct_answers;
-    private Set<String> given_answers;
 
     public SingleAnswerQuestion(String template_path, Set<String> correct_answers){
         super(template_path);
         this.correct_answers = correct_answers;
     }
 
+    @Override
     public void set_given_answers(Map<String, String[]> answers){
         set_given_answers(answers.keySet());
     }
@@ -21,6 +24,13 @@ public class SingleAnswerQuestion extends Question{
         given_answers = answers;
     }
 
+    @Bean
+    @Override
+    public Score getScore(){
+        return new Score(calcPointsEarned(), calcPointsPossible());
+    }
+
+    @Override
     public int calcPointsEarned(){
         int points_earned;
         if(correct_answers.containsAll(given_answers)){
@@ -31,6 +41,7 @@ public class SingleAnswerQuestion extends Question{
         return points_earned;
     }
 
+    @Override
     public int calcPointsPossible(){
         return points_possible;
     }
