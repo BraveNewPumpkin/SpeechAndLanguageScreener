@@ -17,15 +17,15 @@ import java.util.ArrayList;
 public class ScoresController {
     @Autowired
     @Qualifier("screener")
-    private Quiz quiz;
+    private Test test;
 
     @RequestMapping(value = "/scores", method = RequestMethod.GET)
-    public ModelAndView renderQuizView(
+    public ModelAndView renderTestView(
             ModelMap model) {
-        ArrayList<String> section_template_paths = new ArrayList<>(quiz.size());
-        ArrayList<String> section_names = new ArrayList<>(quiz.size());
-        ArrayList<Score> scores = new ArrayList<>(quiz.size());
-        for(Section section: quiz){
+        ArrayList<String> section_template_paths = new ArrayList<>(test.size());
+        ArrayList<String> section_names = new ArrayList<>(test.size());
+        ArrayList<Score> scores = new ArrayList<>(test.size());
+        for(Section section: test){
             section_template_paths.add(section.get_score_template_path());
             section_names.add(section.getName());
             scores.add(section.calcScore());

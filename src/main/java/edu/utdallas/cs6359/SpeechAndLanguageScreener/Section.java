@@ -7,13 +7,13 @@ import java.util.List;
 
 public class Section extends ArrayList<Question> {
     private String name;
-    private String quiz_template_path;
+    private String test_template_path;
     private String score_template_path;
 
-    public Section(String name, String quiz_template_path, String score_template_path, List<Question> questions){
+    public Section(String name, String test_template_path, String score_template_path, List<Question> questions){
         super(questions);
         this.name = name;
-        this.quiz_template_path = quiz_template_path;
+        this.test_template_path = test_template_path;
         this.score_template_path = score_template_path;
     }
 
@@ -21,8 +21,8 @@ public class Section extends ArrayList<Question> {
         return name;
     }
 
-    public String get_quiz_template_path() {
-        return quiz_template_path;
+    public String get_test_template_path() {
+        return test_template_path;
     }
 
     public String get_score_template_path() {
@@ -42,8 +42,8 @@ public class Section extends ArrayList<Question> {
         this.name = name;
     }
 
-    public void setQuiz_template_path(String quiz_template_path) {
-        this.quiz_template_path = quiz_template_path;
+    public void setTest_template_path(String test_template_path) {
+        this.test_template_path = test_template_path;
     }
 
     public void setScore_template_path(String score_template_path) {

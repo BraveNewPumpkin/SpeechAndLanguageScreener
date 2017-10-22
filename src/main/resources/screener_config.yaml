@@ -1,14 +1,14 @@
 section:
     - name: Receptive Language Section
-      quiz_template_path: quiz_sections/section_0
+      quiz_template_path: test_sections/section_0
       score_template_path: score_sections/section_0
       question:
-        - template_path: quiz_sections/section_0/question_1
-        - template_path: quiz_sections/section_0/question_2
+        - template_path: test_sections/section_0/question_1
+        - template_path: test_sections/section_0/question_2
     - name: Expressive Language Section
-      quiz_template_path: quiz_sections/section_1
+      quiz_template_path: test_sections/section_1
       score_template_path: score_sections/section_1
       question:
-        - template_path: quiz_sections/section_1/question_1
-        - template_path: quiz_sections/section_1/question_2
+        - template_path: test_sections/section_1/question_1
+        - template_path: test_sections/section_1/question_2
 
