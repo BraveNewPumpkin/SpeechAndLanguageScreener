@@ -109,7 +109,8 @@ public class QuizController {
     public ModelAndView recordQuestionResponse(
             @PathVariable int section_id,
             @PathVariable int question_id,
-            HttpServletRequest request) {
+            HttpServletRequest request,
+            Model model) {
         //POSTing a question out of order resets the order to the given question
         if(getCurrentSectionId() != section_id || getCurrentQuestionId() != question_id){
             try {
@@ -118,7 +119,7 @@ public class QuizController {
                 //TODO error page 404
             }
         }
-        //TODO record the response in current_question
+        //TODO figure out why parameters is always empty
         Map<String, String[]> parameters = request.getParameterMap();
         current_question.setAnswer(parameters);
         //set http status code to 302 since we are redirecting to a GET
