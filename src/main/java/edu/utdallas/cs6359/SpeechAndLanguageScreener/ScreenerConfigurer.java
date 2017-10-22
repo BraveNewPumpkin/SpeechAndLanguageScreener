@@ -37,7 +37,7 @@ public class ScreenerConfigurer {
         Section section_1 = new SurveySection(
                 "Expressive Language Section",
                 "test_sections/section",
-                "score_sections/section_0",
+                "score_sections/survey_section",
                 questions);
         ArrayList<Section> sections = new ArrayList<>(Arrays.asList(section_0, section_1));
         return new Test(sections);
