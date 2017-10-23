@@ -23,6 +23,9 @@ public class TestController {
     @Qualifier("screener")
     private Test test;
 
+    @Autowired
+    Map<User.Type, User> users;
+
     private Iterator<Section> sections_iter;
     private Iterator<Question> questions_iter;
     private Section current_section;
@@ -94,7 +97,8 @@ public class TestController {
             @PathVariable int section_id,
             @PathVariable int question_id,
             ModelMap model) {
-        String user_name = "Stu Dent"; //TODO implement current user name. this should come from the welcome page
+        User.Type intended_user_type = current_section.get_intended_user_type();
+        String user_name = users.get(intended_user_type).getName();
         model.addAttribute("user_name", user_name);
         model.addAttribute("section_name", current_section.getName());
         model.addAttribute("section_template_path", test.get(section_id).get_test_template_path());
@@ -116,7 +120,6 @@ public class TestController {
                 //TODO error page 404
             }
         }
-        //TODO figure out why parameters is always empty
         Map<String, String[]> parameters = request.getParameterMap();
         current_question.set_given_answers(parameters);
         //set http status code to 302 since we are redirecting to a GET

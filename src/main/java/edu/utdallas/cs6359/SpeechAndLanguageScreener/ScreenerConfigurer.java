@@ -4,9 +4,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import java.util.Arrays;
-import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.*;
 
 @Configuration
 public class ScreenerConfigurer {
@@ -26,6 +24,7 @@ public class ScreenerConfigurer {
                 "Receptive Language Section",
                 "test_sections/section",
                 "score_sections/section_0",
+                User.Type.TESTEE,
                 questions);
         question_0 = new SurveyQuestion(
                 "test_sections/section_1/question_0",
@@ -38,9 +37,18 @@ public class ScreenerConfigurer {
                 "Expressive Language Section",
                 "test_sections/section",
                 "score_sections/survey_section",
+                User.Type.TESTER,
                 questions);
         ArrayList<Section> sections = new ArrayList<>(Arrays.asList(section_0, section_1));
         return new Test(sections);
+    }
+
+    @Bean
+    public Map<User.Type, User> makeUsers(){
+        Map<User.Type, User> users = new HashMap<>();
+        users.put(User.Type.TESTER, new User());
+        users.put(User.Type.TESTEE, new User());
+        return Collections.unmodifiableMap(users);
     }
 
 }
