@@ -28,7 +28,10 @@ public class LoginController {
     public ModelAndView saveNames(HttpServletRequest request){
         Map<String, String[]> parameters = request.getParameterMap();
         //validity check the names and store them if they pass
-        if(!parameters.containsKey("tester_name") || !parameters.containsKey("testee_name")){
+        if(!parameters.containsKey("tester_name")
+                || !parameters.containsKey("testee_name")
+                || parameters.get("tester_name")[0] == ""
+                || parameters.get("testee_name")[0] == ""){
             //TODO error page: no names entered
             request.setAttribute(View.RESPONSE_STATUS_ATTRIBUTE, HttpStatus.BAD_REQUEST);
             return new ModelAndView("/error_page");
