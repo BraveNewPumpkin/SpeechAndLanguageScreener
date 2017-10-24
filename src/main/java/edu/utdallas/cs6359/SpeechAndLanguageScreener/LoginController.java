@@ -30,6 +30,8 @@ public class LoginController {
         //validity check the names and store them if they pass
         if(!parameters.containsKey("tester_name")
                 || !parameters.containsKey("testee_name")
+                || parameters.get("tester_name") == null
+                || parameters.get("testee_name") == null
                 || parameters.get("tester_name")[0] == ""
                 || parameters.get("testee_name")[0] == ""){
             //TODO error page: no names entered
