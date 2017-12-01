@@ -7,21 +7,26 @@ import java.util.Set;
 
 public class SingleAnswerQuestion extends Question{
     protected final int points_possible = 1;
-    Set<String> given_answers;
-    private Set<String> correct_answers;
+    String given_answer;
+    private String correct_answer;
 
-    public SingleAnswerQuestion(String template_path, Set<String> correct_answers){
+    public SingleAnswerQuestion(String template_path, String correct_answer){
         super(template_path);
-        this.correct_answers = correct_answers;
+        this.correct_answer = correct_answer;
     }
 
     @Override
     public void set_given_answers(Map<String, String[]> answers){
-        set_given_answers(answers.keySet());
+        String[] temp = answers.get("answer");
+        if(temp != null){
+            set_given_answer(temp[0]);
+        }else{
+            //TODO error response "invalid answer"
+        }
     }
 
-    public void set_given_answers(Set<String> answers){
-        given_answers = answers;
+    public void set_given_answer(String answer){
+        given_answer = answer;
     }
 
     @Bean
@@ -33,7 +38,7 @@ public class SingleAnswerQuestion extends Question{
     @Override
     public int calcPointsEarned(){
         int points_earned;
-        if(correct_answers.containsAll(given_answers)){
+        if(correct_answer != null && correct_answer.equals(given_answer)){
             points_earned = points_possible;
         } else {
             points_earned = 0;

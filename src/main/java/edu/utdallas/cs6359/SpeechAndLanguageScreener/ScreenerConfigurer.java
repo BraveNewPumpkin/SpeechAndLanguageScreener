@@ -15,10 +15,10 @@ public class ScreenerConfigurer {
         //TODO load this config data from file and populate sections and questions
         Question question_0 = new SingleAnswerQuestion(
                 "test_sections/section_0/question_0",
-                new HashSet<String>(Arrays.asList("option_1")));
+                "option_1");
         Question question_1 = new SingleAnswerQuestion(
                 "test_sections/section_0/question_1",
-                new HashSet<String>(Arrays.asList("option_3")));
+                "option_3");
         ArrayList<Question> questions = new ArrayList<>(Arrays.asList(question_0, question_1));
         Section section_0 = new Section(
                 "Receptive Language Section",
